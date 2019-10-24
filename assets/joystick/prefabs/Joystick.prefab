@@ -40,8 +40,6 @@
         "__id__": 5
       }
     ],
-    "_rotationX": 0,
-    "_rotationY": 0,
     "_scaleX": 1,
     "_scaleY": 1,
     "_position": {
@@ -94,8 +92,6 @@
       "height": 103
     },
     "_children": [],
-    "_rotationX": 0,
-    "_rotationY": 0,
     "_scaleX": 1.5,
     "_scaleY": 1.5,
     "_position": {
@@ -185,8 +181,6 @@
       "height": 78
     },
     "_children": [],
-    "_rotationX": 0,
-    "_rotationY": 0,
     "_scaleX": 1,
     "_scaleY": 1,
     "_position": {

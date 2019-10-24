@@ -2744,11 +2744,11 @@ declare module cc {
 		Use this method to register touch or mouse event permit propagation based on scene graph,
 		you can propagate the event to the parents or swallow it by calling stopPropagation on the event.<br/>
 		It's the recommended way to register touch/mouse event for Node,
-		please do not use cc.eventManager directly for Node.
+		please do not use cc.EventTarget directly for Node.
 		!#zh
 		在节点上注册指定类型的回调函数，也可以设置 target 用于绑定响应函数的调用者。<br/>
 		同时您可以将事件派发到父节点或者通过调用 stopPropagation 拦截它。<br/>
-		推荐使用这种方式来监听节点上的触摸或鼠标事件，请不要在节点上直接使用 cc.eventManager。
+		推荐使用这种方式来监听节点上的触摸或鼠标事件，请不要在节点上直接使用 cc.EventTarget。
 		@param type A string representing the event type to listen for.<br>
 		                       See {{#crossLink "Node/position-changed:event"}}Node Events{{/crossLink}} for all builtin events.
 		@param callback The callback that will be invoked when the event is dispatched.
@@ -6266,7 +6266,7 @@ declare module cc {
 	}		
 		/** !#en
 		<p>
-		 cc.eventManager is a singleton object which manages event listener subscriptions and event dispatching. <br/>
+		 cc.EventTarget is a singleton object which manages event listener subscriptions and event dispatching. <br/>
 		                                                                                                             <br/>
 		 The EventListener list is managed in such way so that event listeners can be added and removed          <br/>
 		 while events are being dispatched.
@@ -6308,7 +6308,7 @@ declare module cc {
 		```js
 		
 		// 1. remove eventManager add Listener;
-		var mouseListener1 = cc.eventManager.addListener({
+		var mouseListener1 = cc.EventTarget.addListener({
 		    event: cc.EventListener.MOUSE,
 		    onMouseDown:  function(keyCode, event){ },
 		    onMouseUp: function(keyCode, event){ },
@@ -6316,7 +6316,7 @@ declare module cc {
 		    onMouseScroll: function () { }
 		}, node);
 		
-		cc.eventManager.removeListener(mouseListener1);
+		cc.EventTarget.removeListener(mouseListener1);
 		
 		// 2. remove eventListener create Listener;
 		var mouseListener2 = cc.EventListener.create({
@@ -6327,7 +6327,7 @@ declare module cc {
 		    onMouseScroll: function () { }
 		});
 		
-		cc.eventManager.removeListener(mouseListener2);
+		cc.EventTarget.removeListener(mouseListener2);
 		
 		``` 
 		*/

@@ -1,12 +1,16 @@
 {
-  "ver": "1.0.0",
+  "ver": "2.3.3",
   "uuid": "bcfaad10-1147-4425-9258-b50bada94ede",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
   "subMetas": {
     "landform": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "40d1ec68-61b6-4e95-8db9-48a7e6d65c44",
       "rawTextureUuid": "bcfaad10-1147-4425-9258-b50bada94ede",
       "trimType": "auto",

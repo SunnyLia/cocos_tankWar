@@ -1,12 +1,16 @@
 {
-  "ver": "1.0.0",
+  "ver": "2.3.3",
   "uuid": "5a823ffc-18d0-45f7-960e-02013631df02",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
   "subMetas": {
     "JoystickBG": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "87ec8436-56e5-4a82-91dd-167ba98b5100",
       "rawTextureUuid": "5a823ffc-18d0-45f7-960e-02013631df02",
       "trimType": "auto",
