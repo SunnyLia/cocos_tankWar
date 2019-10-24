@@ -31,7 +31,7 @@ cc.Class({
     //子弹移动
     bulletMove: function () {
         //偏移
-        var angle = 90 - this.node.rotation;
+        var angle = 90 + this.node.angle;
         if(angle==0 || angle==180 || angle==90){
             this.offset = cc.v2(Math.floor(Math.cos(Math.PI/180*angle)), 
                                 Math.floor(Math.sin(Math.PI/180*angle)));
@@ -71,12 +71,12 @@ cc.Class({
         for(var i=0; i<cc.gameData.tankList.length; i++){
             var tank = cc.gameData.tankList[i]
             var tankCtrl = tank.getComponent("TankScript");
-            if(tankCtrl.team == this.node.tag || tankCtrl.die){
+            if(tankCtrl.team == this.node.tags || tankCtrl.die){
                 //同一队不互相伤害
                 continue;
             }
             var boundingBox = tank.getBoundingBox();
-            if(cc.rectIntersectsRect(rect, boundingBox)){
+            if(rect.intersects(boundingBox)){
                 if(--tankCtrl.blood <= 0){
                     tankCtrl.boom();
                 }

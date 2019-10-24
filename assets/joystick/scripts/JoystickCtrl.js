@@ -93,7 +93,7 @@ cc.Class({
             //把触摸点坐标转换为相对与目标的模型坐标
             var touchPos = this.node.convertToNodeSpaceAR(touch.getLocation())
             //点与圆心的距离
-            var distance = cc.pDistance(touchPos, cc.p(0, 0));
+            var distance = touchPos.sub(cc.p(0, 0)).mag();
             //如果点与圆心距离小于圆的半径,返回true
             if(distance < this.radius ) {
                 if(distance>20){
@@ -113,7 +113,7 @@ cc.Class({
         //把触摸点坐标转换为相对与目标的模型坐标
         var touchPos = this.node.convertToNodeSpaceAR(touch.getLocation())
         //点与圆心的距离
-        var distance = cc.pDistance(touchPos, cc.p(0, 0));
+        var distance = touchPos.sub(cc.p(0, 0)).mag()
 
         //如果点与圆心距离小于圆的半径,控杆跟随触摸点
         if(this.radius >= distance){
@@ -285,7 +285,7 @@ cc.Class({
 
     onDestroy: function()
     {
-        cc.eventManager.removeListener(this._listener);
+        cc.EventTarget.removeListener(this._listener);
     }
 
 });

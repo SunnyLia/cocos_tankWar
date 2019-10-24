@@ -67,7 +67,7 @@ cc.Class({
     //添加坦克移动动作
     tankMoveStart: function (angle) {
 
-        this.node.rotation = 90 - angle;
+        this.node.angle = -(90 - angle);
 
         if(angle==0 || angle==180 || angle==90){
             this.offset = cc.v2(Math.floor(Math.cos(Math.PI/180*angle)), 
@@ -123,7 +123,7 @@ cc.Class({
                 continue;
             }
             var boundingBox = tank.getBoundingBox();
-            if(cc.rectIntersectsRect(rect, boundingBox)){
+            if(rect.intersects(boundingBox)){
                 return true;
             }
         }
@@ -145,10 +145,10 @@ cc.Class({
             bullet = cc.instantiate(this.bullet);
         }
         //设置子弹位置,角度
-        bullet.rotation = this.node.rotation;
+        bullet.rotation = -this.node.angle;
         var pos = this.node.position;
 
-        var angle = 90 - this.node.rotation;
+        var angle = 90 + this.node.angle;
         var offset = cc.v2(0, 0);
         if(angle==0 || angle==180 || angle==90){
             offset = cc.v2(Math.floor(Math.cos(Math.PI/180*angle)), 
@@ -160,12 +160,12 @@ cc.Class({
             offset = cc.v2(Math.cos(Math.PI/180*angle),
                                 Math.sin(Math.PI/180*angle));
         }
-        bullet.position = cc.pAdd(pos,cc.v2(10*offset.x, 10*offset.y));
+        bullet.position = pos.add(cc.v2(10*offset.x, 10*offset.y));
 
         bullet.getComponent("BulletScript").bulletMove();
         bullet.parent = this.bulletNode;
         //子弹标记
-        bullet.tag = this.team;
+        bullet.tags = this.team;
 
         //加到列表
         cc.gameData.bulletList.push(bullet);

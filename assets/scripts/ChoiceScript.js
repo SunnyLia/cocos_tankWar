@@ -26,7 +26,7 @@ cc.Class({
     
     onPlay: function () {
         var self = this;
-        cc.loader.onProgress = function (completedCount, totalCount, item){
+        cc.loader.onProgress = function (completedCount, totalCount, item){  //方法 onProgress 这个回调函数将在 item 加载结束后被调用
             console.log(completedCount+"/"+totalCount);
         };
         cc.director.preloadScene("CityScene"+ cc.gameData.curLevel, function (assets, error){

@@ -51,7 +51,7 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        cc.director.setDisplayStats(true);
+        cc.debug.setDisplayStats(false);
         //获取摇杆控制组件
         this._joystickCtrl = this.yaogan.getComponent("JoystickCtrl");
         //获取地图 TiledMap 组件
@@ -217,7 +217,9 @@ cc.Class({
         if (this._tiledMapData.gidToTileType[gid] != this._tiledMapData.tileType.tileNone && 
             this._tiledMapData.gidToTileType[gid] != this._tiledMapData.tileType.tileGrass){
             if(bullet && this._tiledMapData.gidToTileType[gid] == this._tiledMapData.tileType.tileWall){
-                this.mapLayer0.removeTileAt(cc.v2(parseInt(point.x / this._curMapTileSize.width),parseInt(point.y / this._curMapTileSize.height)));
+                console.log(this.mapLayer0)
+                this.mapLayer0.setTileGIDAt(0,cc.v2(parseInt(point.x / this._curMapTileSize.width),parseInt(point.y / this._curMapTileSize.height)));
+                // this.mapLayer0.removeTileAt(cc.v2(parseInt(point.x / this._curMapTileSize.width),parseInt(point.y / this._curMapTileSize.height)));
             }
             return true;
         }
