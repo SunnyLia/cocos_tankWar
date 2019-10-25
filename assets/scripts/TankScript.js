@@ -57,8 +57,9 @@ cc.Class({
                 self.startFire(self._cityCtrl.bulletPool);
 
             }, this);
-
-            var seq = cc.sequence(cc.delayTime(0.3), callback, cc.delayTime(1));
+                //cc.delayTime 延迟指定的时间量
+            var seq = cc.sequence(cc.delayTime(0.3), callback, cc.delayTime(1)); //创建的动作将按顺序依次运行
+                //cc.repeatForever 永远地重复一个动作
             this.node.runAction(cc.repeatForever(seq));
         }
 
@@ -122,7 +123,7 @@ cc.Class({
             if(this.node === tank){
                 continue;
             }
-            var boundingBox = tank.getBoundingBox();
+            var boundingBox = tank.getBoundingBox(); //获取该坦克的大小
             if(rect.intersects(boundingBox)){
                 return true;
             }
@@ -132,12 +133,12 @@ cc.Class({
 
     //开火
     startFire: function (bulletPool){
+
         if(this.stopFire){
             return false;
         }
         this.stopFire = true;
         this.fireTime = 0.5;
-
         var bullet = null;
         if(bulletPool.size()>0){
             bullet = bulletPool.get(bulletPool);
@@ -145,7 +146,7 @@ cc.Class({
             bullet = cc.instantiate(this.bullet);
         }
         //设置子弹位置,角度
-        bullet.rotations = -this.node.angle;
+        bullet.angle = -this.node.angle;
         var pos = this.node.position;
 
         var angle = 90 + this.node.angle;

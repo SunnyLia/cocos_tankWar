@@ -62,7 +62,6 @@ cc.Class({
         if(err){
             return;
         }
-
         //默认角度
         this.curAngle = null;
 
@@ -143,20 +142,20 @@ cc.Class({
                         function (event) {
                             var angle = null;
                             switch(event.keyCode) {
-                                case cc.KEY.w:
+                                case cc.macro.KEY.w:
                                     angle = 90;
                                     break;
-                                case cc.KEY.s:
+                                case cc.macro.KEY.s:
                                     angle = 270;
                                     break;
-                                case cc.KEY.a:
+                                case cc.macro.KEY.a:
                                     angle = 180;
                                     break;
-                                case cc.KEY.d:
+                                case cc.macro.KEY.d:
                                     angle = 0;
                                     break;
                             }
-                            if(event.keyCode == cc.KEY.k){
+                            if(event.keyCode == cc.macro.KEY.k){
                                 this.fireBtnClick();
                             }else {
                                 self._playerTankCtrl.tankMoveStop();
@@ -170,7 +169,7 @@ cc.Class({
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, 
                         function (event){
                             //停止前进
-                            if(event.keyCode != cc.KEY.k){
+                            if(event.keyCode != cc.macro.KEY.k){
                                 self._playerTankCtrl.tankMoveStop();
                             }
                         }, this);
@@ -297,13 +296,13 @@ cc.Class({
             }
 
             if(index == 0){
-                tank.rotations = 90;
+                tank.angle = 90;
             }else if(index == 1){
-                tank.rotations = 180;
+                tank.angle = 180;
             }else if(index == 2){
-                tank.rotations = 270;
+                tank.angle = 270;
             }
-            if(tankCtrl.collisionTank(tank.getBoundingBox())){
+            if(tankCtrl.collisionTank(tank.getBoundingBox())){ //判断是否与其他坦克碰撞
                 for(var i=0; i<this.bornPoses.length-1; i++){
                     tank.position = this.bornPoses[i];
                     if(!tankCtrl.collisionTank(tank.getBoundingBox())){
