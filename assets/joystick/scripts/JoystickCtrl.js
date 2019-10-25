@@ -63,19 +63,30 @@ cc.Class({
 
     registerInput: function() {
         var self = this;
-        // touch input
-        this._listener = cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan: function(touch, event) {
-                return self.onTouchBegan(touch, event)
-            },
-            onTouchMoved: function(touch, event) {
-                self.onTouchMoved(touch, event)
-            },
-            onTouchEnded: function(touch, event) {
-                self.onTouchEnded(touch, event)
-            }
-        }, self.node);
+        // 低版本方法
+        // this._listener = cc.eventManager.addListener({
+        //     event: cc.EventListener.TOUCH_ONE_BY_ONE,
+        //     onTouchBegan: function(touch, event) {
+        //         return self.onTouchBegan(touch, event)
+        //     },
+        //     onTouchMoved: function(touch, event) {
+        //         self.onTouchMoved(touch, event)
+        //     },
+        //     onTouchEnded: function(touch, event) {
+        //         self.onTouchEnded(touch, event)
+        //     }
+        // }, self.node);
+        this.node.on("touchstart", () => {
+            return self.onTouchBegan(touch, event)
+        }, this);
+     
+        this.node.on("touchmove", () => {
+            self.onTouchMoved(touch, event);
+        }, this);
+     
+        this.node.on("touchend", (event) => {
+            self.onTouchEnded(touch, event);
+        }, this);
     },
 
 
@@ -283,9 +294,12 @@ cc.Class({
         }
     },
 
-    onDestroy: function()
-    {
-        cc.EventTarget.removeListener(this._listener);
+    onDestroy: function() {
+        // 低版本方法
+        // cc.EventTarget.removeListener(this._listener);
+        this.node.off("touchstart");
+        this.node.off("touchmove");
+        this.node.off("touchend");
     }
 
 });
