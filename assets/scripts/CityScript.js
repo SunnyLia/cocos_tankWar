@@ -217,7 +217,6 @@ cc.Class({
         if (this._tiledMapData.gidToTileType[gid] != this._tiledMapData.tileType.tileNone && 
             this._tiledMapData.gidToTileType[gid] != this._tiledMapData.tileType.tileGrass){
             if(bullet && this._tiledMapData.gidToTileType[gid] == this._tiledMapData.tileType.tileWall){
-                console.log(this.mapLayer0)
                 this.mapLayer0.setTileGIDAt(0,cc.v2(parseInt(point.x / this._curMapTileSize.width),parseInt(point.y / this._curMapTileSize.height)));
                 // this.mapLayer0.removeTileAt(cc.v2(parseInt(point.x / this._curMapTileSize.width),parseInt(point.y / this._curMapTileSize.height)));
             }
@@ -298,11 +297,11 @@ cc.Class({
             }
 
             if(index == 0){
-                tank.rotation = 90;
+                tank.rotations = 90;
             }else if(index == 1){
-                tank.rotation = 180;
+                tank.rotations = 180;
             }else if(index == 2){
-                tank.rotation = 270;
+                tank.rotations = 270;
             }
             if(tankCtrl.collisionTank(tank.getBoundingBox())){
                 for(var i=0; i<this.bornPoses.length-1; i++){

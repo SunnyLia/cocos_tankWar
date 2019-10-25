@@ -145,7 +145,7 @@ cc.Class({
             bullet = cc.instantiate(this.bullet);
         }
         //设置子弹位置,角度
-        bullet.rotation = -this.node.angle;
+        bullet.rotations = -this.node.angle;
         var pos = this.node.position;
 
         var angle = 90 + this.node.angle;
