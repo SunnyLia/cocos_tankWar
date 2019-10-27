@@ -1,6 +1,3 @@
-var TankType = require("TankData").tankType;
-import { rotateBy } from './../../creator.d';
-
 cc.Class({
     extends: cc.Component,
 
