@@ -1,4 +1,5 @@
 var TankType = require("TankData").tankType;
+import { rotateBy } from './../../creator.d';
 
 cc.Class({
     extends: cc.Component,
@@ -31,7 +32,7 @@ cc.Class({
     //子弹移动
     bulletMove: function () {
         //偏移
-        var angle = 90 + this.node.angle;
+        var angle = 90 - this.node.rotation;
         if(angle==0 || angle==180 || angle==90){
             this.offset = cc.v2(Math.floor(Math.cos(Math.PI/180*angle)), 
                                 Math.floor(Math.sin(Math.PI/180*angle)));
@@ -52,6 +53,7 @@ cc.Class({
 
     // called every frame, uncomment this function to activate update callback
     update: function (dt) {
+        
         //移动
         this.node.x += this.offset.x*this.speed*dt;
         this.node.y += this.offset.y*this.speed*dt;

@@ -112,7 +112,7 @@ cc.Class({
 
         //启动定时器，添加坦克
         this.schedule(this.addAITank,3,cc.macro.REPEAT_FOREVER,1);
-        
+
     },
 
     //注册输入事件
@@ -121,9 +121,8 @@ cc.Class({
         var self = this;
 
         this._joystickCtrl.addJoyStickTouchChangeListener(function (angle) {
-            
-            if(angle == self.curAngle &&
-                !self._playerTankCtrl.stopMove ){
+         
+            if(angle == self.curAngle && !self._playerTankCtrl.stopMove ){
                 return;
             }
             self.curAngle = angle;

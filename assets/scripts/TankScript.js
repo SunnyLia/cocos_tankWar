@@ -67,8 +67,8 @@ cc.Class({
 
     //添加坦克移动动作
     tankMoveStart: function (angle) {
-
-        this.node.angle = -(90 - angle);
+        
+        this.node.rotation = 90 - angle;
 
         if(angle==0 || angle==180 || angle==90){
             this.offset = cc.v2(Math.floor(Math.cos(Math.PI/180*angle)), 
@@ -145,11 +145,12 @@ cc.Class({
         }else {
             bullet = cc.instantiate(this.bullet);
         }
+        
         //设置子弹位置,角度
-        bullet.angle = -this.node.angle;
+        bullet.rotation = this.node.rotation;
         var pos = this.node.position;
 
-        var angle = 90 + this.node.angle;
+        var angle = 90 - this.node.rotation;
         var offset = cc.v2(0, 0);
         if(angle==0 || angle==180 || angle==90){
             offset = cc.v2(Math.floor(Math.cos(Math.PI/180*angle)), 
