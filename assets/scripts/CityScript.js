@@ -109,13 +109,12 @@ cc.Class({
 
         //获取组件
         this.tankNode = cc.find("/Canvas/Map/tank");
-        
+
         //加入player
         this.addPlayerTank();
 
         //启动定时器，添加坦克
-        // this.schedule(this.addAITank,3,cc.macro.REPEAT_FOREVER,1);
-        this.addBorn()
+        this.schedule(this.addBorn,3,cc.macro.REPEAT_FOREVER,1);
     },
 
     //注册输入事件
@@ -269,15 +268,13 @@ cc.Class({
     },
 
     //加入生成坦克特效
-    addBorn: function(pos){
+    addBorn: function(){
         if(this.tankPool.size()>0){
             var born = this.bornPool.get();
-            if(!pos){
-                born.position = this.bornPoses[this.bornPoses.length-1];
-                born.getComponent("bornScript").init(this)
-            }else{
-                born.position = pos
-            }
+            this.randIndex = parseInt(Math.random()*3, 10);
+            born.position = this.bornPoses[this.randIndex];
+            born.getComponent("bornScript").init(this)
+
             born.parent = this.tankNode;
             var anim = born.getComponent(cc.Animation);
             anim.play();
@@ -286,23 +283,24 @@ cc.Class({
 
     delBorn: function(dt){
         this.bornPool.put(dt)
+        this.addAITank()
     },
 
     //加入AI
     addAITank: function(dt, team) {
         if(this.tankPool.size()>0){
             var tank = this.tankPool.get();
-            var index = parseInt(Math.random()*3, 10);
+            
             //获取坦克控制组件
             var tankCtrl = tank.getComponent("TankScript");
             //设置坦克属性
-            tank.getComponent(cc.Sprite).spriteFrame = this.spriteFrames[index];
-            tank.position = this.bornPoses[index];
+            tank.getComponent(cc.Sprite).spriteFrame = this.spriteFrames[this.randIndex];
+            tank.position = this.bornPoses[this.randIndex];
 
-            tankCtrl.tankType = index;
-            tankCtrl.speed = this.tankSpeeds[index];
-            tankCtrl.fireTime = this.tankFireTimes[index];
-            tankCtrl.blood = this.tankBloods[index];
+            tankCtrl.tankType = this.randIndex;
+            tankCtrl.speed = this.tankSpeeds[this.randIndex];
+            tankCtrl.fireTime = this.tankFireTimes[this.randIndex];
+            tankCtrl.blood = this.tankBloods[this.randIndex];
             tankCtrl.die = false;
 
             if(!team){
@@ -318,11 +316,11 @@ cc.Class({
                 tankCtrl.team = team;
             }
 
-            if(index == 0){
+            if(this.randIndex == 0){
                 tank.angle = 90;
-            }else if(index == 1){
+            }else if(this.randIndex == 1){
                 tank.angle = 180;
-            }else if(index == 2){
+            }else if(this.randIndex == 2){
                 tank.angle = 270;
             }
             if(tankCtrl.collisionTank(tank.getBoundingBox())){ //判断是否与其他坦克碰撞
