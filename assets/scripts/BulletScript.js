@@ -57,8 +57,7 @@ cc.Class({
 
         //检测碰撞
         var rect = this.node.getBoundingBox();
-        if(this._cityCtrl.collisionTest(rect, true)
-            || this.collisionTank(rect)){
+        if(this._cityCtrl.collisionTest(rect, true) || this.collisionTank(rect)){
             //子弹爆炸
             this.bulletBoom();
         }

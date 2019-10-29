@@ -12,6 +12,8 @@ cc.Class({
 
         //子弹预制体
         bullet: cc.Prefab,
+        //tank生成动画预制体
+        born: cc.Prefab,
         //坦克预制体
         tank: {
             default: null,
@@ -48,7 +50,6 @@ cc.Class({
         
 
     },
-
     // use this for initialization
     onLoad: function () {
         cc.debug.setDisplayStats(false);
@@ -86,9 +87,12 @@ cc.Class({
             this.bulletPool.put(bullet);
         }
         this.tankPool = new cc.NodePool("TankScript");
+        this.bornPool = new cc.NodePool("bornScript");
         for(var i=0; i<this.maxCount; ++i){
             var tank = cc.instantiate(this.tank);
             this.tankPool.put(tank);
+            var born = cc.instantiate(this.born);
+            this.bornPool.put(born);
         }
         if(!cc.gameData){
             cc.gameData = {};
@@ -105,14 +109,13 @@ cc.Class({
 
         //获取组件
         this.tankNode = cc.find("/Canvas/Map/tank");
+        
         //加入player
-        this.player = this.addPlayerTank();
-        //获取坦克控制组件
-        this._playerTankCtrl = this.player.getComponent("TankScript"); 
+        this.addPlayerTank();
 
         //启动定时器，添加坦克
-        this.schedule(this.addAITank,3,cc.macro.REPEAT_FOREVER,1);
-
+        // this.schedule(this.addAITank,3,cc.macro.REPEAT_FOREVER,1);
+        this.addBorn()
     },
 
     //注册输入事件
@@ -229,31 +232,32 @@ cc.Class({
 
     //加入玩家坦克
     addPlayerTank: function(team) {
-        if(this.tankPool.size()>0){
-            var tank = this.tankPool.get();
+        if(this.tankPool.size()>0){            
+           var tank = this.tankPool.get();
             tank.getComponent(cc.Sprite).spriteFrame = this.spriteFrames[this.spriteFrames.length-1];
             tank.position = this.bornPoses[this.bornPoses.length-1];
+
             //获取坦克控制组件
-            var tankCtrl = tank.getComponent("TankScript");
+            this._playerTankCtrl = tank.getComponent("TankScript");
             //设置坦克属性
-            tankCtrl.tankType = TankType.Player;
-            tankCtrl.speed = this.tankSpeeds[this.tankSpeeds.length-1];
-            tankCtrl.fireTime = this.tankFireTimes[this.tankFireTimes.length-1];
-            tankCtrl.blood = this.tankBloods[this.tankBloods.length-1];
-            tankCtrl.die = false;
+            this._playerTankCtrl.tankType = TankType.Player;
+            this._playerTankCtrl.speed = this.tankSpeeds[this.tankSpeeds.length-1];
+            this._playerTankCtrl.fireTime = this.tankFireTimes[this.tankFireTimes.length-1];
+            this._playerTankCtrl.blood = this.tankBloods[this.tankBloods.length-1];
+            this._playerTankCtrl.die = false;
             
             if(!team){
                 if(cc.gameData.single){
                     //单机版
-                    tankCtrl.team = 0;
+                    this._playerTankCtrl.team = 0;
                 }else {
                     //大乱斗
-                    tankCtrl.team = ++cc.gameData.teamId;
+                    this._playerTankCtrl.team = ++cc.gameData.teamId;
                 }
                 
             }else {
                 //组队
-                tankCtrl.team = team;
+                this._playerTankCtrl.team = team;
             }
 
             tank.parent = this.tankNode;
@@ -262,6 +266,26 @@ cc.Class({
             return tank;
         }
         return null;
+    },
+
+    //加入生成坦克特效
+    addBorn: function(pos){
+        if(this.tankPool.size()>0){
+            var born = this.bornPool.get();
+            if(!pos){
+                born.position = this.bornPoses[this.bornPoses.length-1];
+                born.getComponent("bornScript").init(this)
+            }else{
+                born.position = pos
+            }
+            born.parent = this.tankNode;
+            var anim = born.getComponent(cc.Animation);
+            anim.play();
+        }
+    },
+
+    delBorn: function(dt){
+        this.bornPool.put(dt)
     },
 
     //加入AI
