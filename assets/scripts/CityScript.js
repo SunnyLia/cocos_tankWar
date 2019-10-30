@@ -14,6 +14,8 @@ cc.Class({
         bullet: cc.Prefab,
         //tank生成动画预制体
         born: cc.Prefab,
+        //得分预制体
+        scorePop: cc.Prefab,
         //坦克预制体
         tank: {
             default: null,
@@ -88,11 +90,14 @@ cc.Class({
         }
         this.tankPool = new cc.NodePool("TankScript");
         this.bornPool = new cc.NodePool("bornScript");
+        // this.scorePool = new cc.NodePool("bornScript");
         for(var i=0; i<this.maxCount; ++i){
             var tank = cc.instantiate(this.tank);
             this.tankPool.put(tank);
             var born = cc.instantiate(this.born);
             this.bornPool.put(born);
+            // var score = cc.instantiate(this.scorePop);
+            // this.bornPool.put(score);
         }
         if(!cc.gameData){
             cc.gameData = {};
@@ -111,7 +116,7 @@ cc.Class({
         this.tankNode = cc.find("/Canvas/Map/tank");
 
         //加入player
-        this.addPlayerTank();
+        this.playerTank = this.addPlayerTank();
 
         //启动定时器，添加坦克
         this.schedule(this.addBorn,3,cc.macro.REPEAT_FOREVER,1);
@@ -342,9 +347,19 @@ cc.Class({
         tank.parent = null;
         tank.getComponent("TankScript").die = true;
         this.tankPool.put(tank);
+        this.addScorePop();
         if(cc.gameData.single && tank.getComponent("TankScript").team == 0){
             cc.director.loadScene("StartScene");
         }
+    },
+
+    addScorePop: function() {
+        var score = cc.instantiate(this.scorePop);
+        score.parent = this.tankNode;
+        score.position = this.playerTank.position;
+        var anim = score.getComponent(cc.Animation);
+        console.log(anim);
+        anim.play();
     },
 
     //开火按钮点击

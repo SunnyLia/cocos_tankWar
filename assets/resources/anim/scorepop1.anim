@@ -1,9 +1,9 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "scorePop",
+  "_name": "scorepop1",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.6666666666666666,
+  "_duration": 0.5,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -13,16 +13,16 @@
         {
           "frame": 0,
           "value": [
-            -421,
-            50,
+            0,
+            0,
             0
           ]
         },
         {
-          "frame": 0.6666666666666666,
+          "frame": 0.5,
           "value": [
-            -421,
-            120,
+            0,
+            100,
             0
           ]
         }
@@ -33,11 +33,17 @@
           "value": 255
         },
         {
-          "frame": 0.6666666666666666,
-          "value": 0
+          "frame": 0.5,
+          "value": 255
         }
       ]
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.5,
+      "func": "delScore",
+      "params": []
+    }
+  ]
 }
